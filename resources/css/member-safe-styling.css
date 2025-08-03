@@ -1,0 +1,158 @@
+/* SUPER AGGRESSIVE Member Dashboard Styling */
+
+/* Force black background everywhere */
+* {
+    --fi-body-bg: #000000 !important;
+    --fi-panel-bg: #000000 !important;
+}
+
+body,
+html,
+.fi-layout,
+.fi-main,
+.fi-body,
+.min-h-screen,
+.fi-page,
+.fi-dashboard-page,
+[data-filament-main],
+[class*="bg-gray"],
+[class*="bg-white"],
+.bg-white,
+.bg-gray-50 {
+    background-color: #000000 !important;
+    background: #000000 !important;
+}
+
+/* Force gray background on all cards and widgets */
+.fi-card,
+.fi-section-card,
+.fi-widget,
+.fi-widget-card,
+.fi-stats-card,
+.fi-dashboard-widget,
+div[class*="card"],
+div[class*="widget"],
+[data-card],
+.filament-card,
+.filament-widget,
+.rounded-xl,
+.shadow,
+[class*="shadow"],
+.border,
+[class*="border"] {
+    background-color: #909090 !important;
+    background: #909090 !important;
+    border: 1px solid #808080 !important;
+}
+
+/* Force green buttons everywhere */
+button,
+.fi-btn,
+.fi-btn-primary,
+.fi-ac-btn-action,
+button[type="submit"],
+button[type="button"],
+input[type="submit"],
+.btn,
+.button,
+a[class*="btn"],
+a[class*="button"],
+[class*="bg-primary"],
+[class*="bg-blue"],
+[class*="bg-indigo"],
+[class*="bg-green"],
+.bg-blue-600,
+.bg-green-600,
+.bg-indigo-600,
+.bg-primary-600 {
+    background-color: #9BFD14 !important;
+    background: #9BFD14 !important;
+    color: #000000 !important;
+    border-color: #9BFD14 !important;
+}
+
+/* Button hover states */
+button:hover,
+.fi-btn:hover,
+.fi-btn-primary:hover,
+.fi-ac-btn-action:hover,
+button[type="submit"]:hover,
+button[type="button"]:hover,
+input[type="submit"]:hover,
+.btn:hover,
+.button:hover,
+a[class*="btn"]:hover,
+a[class*="button"]:hover {
+    background-color: #8ae812 !important;
+    background: #8ae812 !important;
+    color: #000000 !important;
+}
+
+/* Ensure all text in cards is black and visible */
+.fi-card,
+.fi-card *,
+.fi-section-card,
+.fi-section-card *,
+.fi-widget,
+.fi-widget *,
+.fi-widget-card,
+.fi-widget-card *,
+div[class*="card"],
+div[class*="card"] *,
+div[class*="widget"],
+div[class*="widget"] * {
+    color: #000000 !important;
+}
+
+/* Navigation and sidebar */
+.fi-sidebar {
+    background-color: #1a1a1a !important;
+    background: #1a1a1a !important;
+}
+
+.fi-sidebar-nav-item,
+.fi-sidebar-nav-item a,
+.fi-sidebar-nav-item span {
+    color: #909090 !important;
+}
+
+.fi-sidebar-nav-item:hover,
+.fi-sidebar-nav-item:hover a,
+.fi-sidebar-nav-item:hover span {
+    color: #FBBF24 !important;
+}
+
+/* Header */
+.fi-header {
+    background-color: #909090 !important;
+    background: #909090 !important;
+}
+
+/* Tables */
+table,
+table th,
+table td {
+    color: #000000 !important;
+    border-color: #808080 !important;
+}
+
+/* Override Tailwind utility classes */
+.text-white,
+.text-gray-900,
+.text-gray-800 {
+    color: #000000 !important;
+}
+
+.bg-white,
+.bg-gray-50,
+.bg-gray-100 {
+    background-color: #909090 !important;
+    background: #909090 !important;
+}
+
+/* Specific Filament component overrides */
+[x-data],
+[data-filament-page],
+[data-filament-main] {
+    background-color: #000000 !important;
+}

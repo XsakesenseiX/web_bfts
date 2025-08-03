@@ -1,0 +1,16 @@
+body {
+    background-color: black;
+    color: lightgray;
+}
+
+.nav-link:hover {
+    color: yellow;
+}
+
+.btn-primary {
+    background-color: #9BFD14;
+}
+
+.card {
+    background-color: #867476;
+}
