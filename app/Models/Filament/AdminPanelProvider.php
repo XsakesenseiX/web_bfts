@@ -39,6 +39,7 @@ class AdminPanelProvider extends PanelProvider
             ->widgets([
                 //
             ])
+            ->brandLogo(asset('assets/images/btfs-logo.png'))
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,

@@ -86,8 +86,8 @@ class CheckInResource extends Resource
                         Notification::make()->title('Check-in Gagal!')->body('Member ini tidak memiliki membership aktif.')->danger()->send();
                         return;
                     }
-                    if ($user->checkIns()->whereDate('created_at', Carbon::today())->exists()) {
-                        Notification::make()->title('Check-in Gagal!')->body('Member ini sudah check-in hari ini.')->warning()->send();
+                    if ($user->checkIns()->whereDate('created_at', Carbon::today())->count() >= 5) {
+                        Notification::make()->title('Check-in Gagal!')->body('Member ini sudah mencapai batas maksimal 5x check-in hari ini.')->warning()->send();
                         return;
                     }
                     CheckIn::create(['user_id' => $user->id]);

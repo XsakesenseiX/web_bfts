@@ -25,6 +25,8 @@ class MemberPanelProvider extends PanelProvider
         return $panel
             ->id('member')
             ->path('member')
+            ->brandLogo(asset('assets/images/font-btfs.png'))
+            ->brandLogoHeight('3rem')
             ->colors([
                 'primary' => '#9BFD14',
                 'gray' => '#909090',

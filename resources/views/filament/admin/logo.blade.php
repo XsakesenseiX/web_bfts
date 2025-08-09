@@ -1,0 +1,1 @@
+<img src="/assets/images/font-btfs.png" alt="BodyFit Tenbah Sawah" class="h-full" />

@@ -56,6 +56,7 @@ class MemberPanelProvider extends PanelProvider
                 PurchasePackage::class,
                 MemberCheckIn::class,
             ])
+            ->brandLogo(asset('assets/images/btfs-logo.png'))
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
