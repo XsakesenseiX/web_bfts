@@ -8,12 +8,15 @@ use App\Models\MembershipPackage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use Filament\Notifications\Notification;
 
 class PackageController extends Controller
 {
     public function index()
     {
         $user = Auth::user();
+        $activeMembership = $user->memberships()->where('status', 'active')->first();
+
         $query = MembershipPackage::query();
 
         if ($user->status === 'mahasiswa') {
@@ -24,7 +27,7 @@ class PackageController extends Controller
 
         $packages = $query->get();
 
-        return view('member.packages.index', compact('packages'));
+        return view('member.packages.index', compact('packages', 'activeMembership'));
     }
 
     public function show(MembershipPackage $package)
@@ -46,6 +49,31 @@ class PackageController extends Controller
     {
         $request->validate(['payment_proof' => 'required|image|mimes:jpeg,png,jpg|max:2048']);
         $path = $request->file('payment_proof')->store('proofs', 'public');
+
+        $user = Auth::user();
+        $activeMemberships = $user->memberships()->where('status', 'active')->get();
+
+        foreach ($activeMemberships as $activeMembership) {
+            if ($package->type === 'loyalty') {
+                if ($activeMembership->package->type === 'regular' || $activeMembership->package->type === 'student') {
+                    Notification::make()
+                        ->title('Pembelian Gagal')
+                        ->body('Anda sudah memiliki paket Regular atau Student yang aktif. Tidak bisa membeli paket Loyalty.')
+                        ->danger()
+                        ->send();
+                    return redirect()->back();
+                }
+            } elseif ($package->type === 'regular' || $package->type === 'student') {
+                if ($activeMembership->package->type === 'loyalty') {
+                    Notification::make()
+                        ->title('Pembelian Gagal')
+                        ->body('Anda sudah memiliki paket Loyalty yang aktif. Tidak bisa membeli paket Regular atau Student.')
+                        ->danger()
+                        ->send();
+                    return redirect()->back();
+                }
+            }
+        }
 
         Membership::create([
             'user_id' => Auth::id(),

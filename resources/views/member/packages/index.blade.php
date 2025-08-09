@@ -15,8 +15,23 @@
                             <p class="text-sm">Durasi: {{ $package->duration_days }} hari</p>
                         </div>
                         <div class="p-6 bg-black bg-opacity-20 mt-auto">
-                            <a href="{{ route('packages.show', $package) }}" class="w-full text-center block bg-lime hover:bg-lime/90 text-black font-bold py-2 px-4 rounded">
-                                Pilih Paket
+                            @php
+                                $isDisabled = false;
+                                $buttonText = 'Pilih Paket';
+
+                                if ($activeMembership) {
+                                    if ($activeMembership->package->type === 'loyalty') {
+                                        $isDisabled = true;
+                                        $buttonText = 'Anda sudah memiliki Loyalty Card';
+                                    } elseif (($activeMembership->package->type === 'regular' || $activeMembership->package->type === 'student') && $package->type === 'loyalty') {
+                                        $isDisabled = true;
+                                        $buttonText = 'Tidak bisa membeli Loyalty Card';
+                                    }
+                                }
+                            @endphp
+                            <a href="{{ $isDisabled ? '#' : route('packages.show', $package) }}" class="w-full text-center block font-bold py-2 px-4 rounded
+                                {{ $isDisabled ? 'bg-gray-500 cursor-not-allowed' : 'bg-lime hover:bg-lime/90 text-black' }}">
+                                {{ $buttonText }}
                             </a>
                         </div>
                     </div>

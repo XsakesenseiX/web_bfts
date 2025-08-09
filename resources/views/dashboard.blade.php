@@ -21,17 +21,30 @@
                             <p><strong>Status:</strong> <span class="px-2 py-1 text-xs font-semibold text-white bg-lime rounded-full">Aktif</span></p>
                             <p><strong>Berlaku hingga:</strong> {{ \Carbon\Carbon::parse($membership->end_date)->format('d F Y') }}</p>
                             @php
-                                $totalDuration = $membership->package->duration_days;
                                 $daysRemaining = now()->diffInDays($membership->end_date, false);
-                                $daysPassed = $totalDuration - $daysRemaining;
-                                $percentage = ($daysPassed / $totalDuration) * 100;
-                                // Ensure percentage is between 0 and 100
-                                $percentage = max(0, min(100, $percentage));
                             @endphp
                             <p><strong>Sisa Hari:</strong> {{ intval($daysRemaining) }} hari</p>
-                            <div class="w-full bg-lime rounded-full h-2.5 mt-2">
-                                <div class="bg-gray-700 h-2.5 rounded-full" style="width: {{ $percentage }}%"></div>
-                            </div>
+
+                            @if ($membership->package->type === 'loyalty')
+                                <p class="mt-4"><strong>Check-in Tersisa:</strong> {{ $membership->package->check_in_limit - $membership->check_ins_made }} / {{ $membership->package->check_in_limit }}</p>
+                                <div class="flex space-x-1 mt-2">
+                                    @for ($i = 0; $i < $membership->package->check_in_limit; $i++)
+                                        <div class="w-4 h-4 rounded-full
+                                            {{ $i < $membership->check_ins_made ? 'bg-lime' : 'bg-gray-700' }}">
+                                        </div>
+                                    @endfor
+                                </div>
+                            @else
+                                @php
+                                    $totalDuration = $membership->package->duration_days;
+                                    $daysPassed = $totalDuration - $daysRemaining;
+                                    $percentage = ($daysPassed / $totalDuration) * 100;
+                                    $percentage = max(0, min(100, $percentage));
+                                @endphp
+                                <div class="w-full bg-lime rounded-full h-2.5 mt-2">
+                                    <div class="bg-gray-700 h-2.5 rounded-full" style="width: {{ $percentage }}%"></div>
+                                </div>
+                            @endif
                         </div>
                     @else
                         <div class="text-center">
@@ -43,7 +56,7 @@
                     @endif
                 </div>
 <div class="bg-custom-gray p-6 rounded-lg shadow-md border border-lime shadow-lg shadow-lime-500/50">
-                    <h4 class="font-bold text-lg mb-4 text-lime">Riwayat Presensi Terakhir</h4>
+                    <h4 class="font-bold text-lg mb-4 text-lime">Riwayat Check-in</h4>
                     <table class="w-full text-sm text-white">
                         <thead><tr class="border-b border-[var(--theme-border)]"><th class="text-left pb-2">Tanggal</th><th class="text-left pb-2">Waktu</th><th class="text-left pb-2">Loker</th></tr></thead>
                         <tbody>
