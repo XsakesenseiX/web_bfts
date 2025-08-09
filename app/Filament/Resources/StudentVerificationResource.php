@@ -48,9 +48,10 @@ class StudentVerificationResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')->searchable(),
                 Tables\Columns\TextColumn::make('email')->searchable(),
-                ImageColumn::make('student_id_card_path')
+                Tables\Columns\TextColumn::make('student_id_card_path')
                     ->label('Kartu Mahasiswa')
-                    ->url(fn (User $record) => $record->student_id_card_url)
+                    ->formatStateUsing(fn () => 'Lihat Bukti')
+                    ->url(fn (User $record): string => asset('storage/' . $record->student_id_card_path))
                     ->openUrlInNewTab(),
             ])
             ->filters([

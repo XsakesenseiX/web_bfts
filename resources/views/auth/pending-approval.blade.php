@@ -10,7 +10,7 @@
                 fetch('{{ route("check.approval.status") }}')
                     .then(response => response.json())
                     .then(data => {
-                        if (data.approved) {
+                        if (data.is_approved) {
                             window.location.href = '{{ route("dashboard") }}';
                         }
                     });

@@ -30,26 +30,27 @@ class UserResource extends Resource
                 Forms\Components\TextInput::make('email')
                     ->email()
                     ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('phone_number')
+                    ->maxLength(255)
+                    ->unique(ignoreRecord: true), // Memastikan email unik
+                Forms\Components\TextInput::make('phone') // Menggunakan nama kolom 'phone' dari migrasi
                     ->tel()
-                    ->label('Nomor Telepon')
-                    ->maxLength(20),
+                    ->label('Nomor Telepon'),
                 Forms\Components\Textarea::make('address')
                     ->label('Alamat')
-                    ->maxLength(65535)
                     ->columnSpanFull(),
                 Forms\Components\Select::make('status')
                     ->options([
                         'umum' => 'Umum',
                         'mahasiswa' => 'Mahasiswa',
                     ])
-                    ->required()
-                    ->reactive(),
+                    ->required(),
                 Forms\Components\FileUpload::make('student_id_card_path')
                     ->label('Kartu Tanda Mahasiswa')
                     ->image()
-                    ->visible(fn ($get) => $get('status') === 'mahasiswa'),
+                    ->directory('student-id-cards'),
+                Forms\Components\Toggle::make('is_approved')
+                    ->label('Disetujui')
+                    ->required(),
                 Forms\Components\Select::make('role')
                     ->options([
                         'admin' => 'Admin',
@@ -60,7 +61,8 @@ class UserResource extends Resource
                     ->password()
                     ->dehydrated(fn ($state) => filled($state))
                     ->required(fn (string $context): bool => $context === 'create')
-                    ->dehydrateStateUsing(fn (string $state): string => Hash::make($state)),
+                    ->dehydrateStateUsing(fn (string $state): string => Hash::make($state))
+                    ->columnSpanFull(),
             ]);
     }
 
@@ -70,10 +72,38 @@ class UserResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('name')->searchable(),
                 Tables\Columns\TextColumn::make('email')->searchable(),
-                Tables\Columns\TextColumn::make('phone_number')->label('No. Telepon')->searchable(),
-                Tables\Columns\TextColumn::make('status')
-                    ->badge(),
+                Tables\Columns\TextColumn::make('phone')->label('No. Telepon')->searchable(),
+                Tables\Columns\TextColumn::make('address')->label('Alamat')->searchable()->toggleable(isToggledHiddenByDefault: true),
+                Tables\Columns\TextColumn::make('status')->label('Status')->searchable(),
                 Tables\Columns\ImageColumn::make('student_id_card_path')->label('Kartu Mahasiswa'),
+                
+
+                Tables\Columns\TextColumn::make('activeMembership.package.name')
+                    ->label('Membership')
+                    ->badge()
+                    ->color(fn ($state) => $state ? 'success' : 'danger')
+                    ->formatStateUsing(function (User $record) {
+                        $activeMembership = $record->memberships()->where('status', 'active')->first();
+                        return $activeMembership ? 'Aktif' : 'Tidak Aktif';
+                    })
+                    ->action(Tables\Actions\Action::make('viewMembership')
+                        ->label('Lihat Detail')
+                        ->modalContent(function (User $record) {
+                            $activeMembership = $record->memberships()->where('status', 'active')->first();
+                            if ($activeMembership) {
+                                $endDate = \Carbon\Carbon::parse($activeMembership->end_date);
+                                $remainingDays = now()->diffInDays($endDate, false);
+                                return view('filament.admin.memberships.view-membership-details', [
+                                    'membership' => $activeMembership,
+                                    'remainingDays' => $remainingDays,
+                                ]);
+                            }
+                            return 'Tidak ada membership aktif.';
+                        })
+                        ->modalSubmitAction(false)
+                        ->modalCancelActionLabel('Close')
+                        ->visible(fn (User $record) => $record->memberships()->where('status', 'active')->exists())
+                    ),
                 Tables\Columns\TextColumn::make('role')
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
@@ -111,4 +141,14 @@ class UserResource extends Resource
             'edit' => Pages\EditUser::route('/{record}/edit'),
         ];
     }    
+
+    protected static function getCreatedNotification(): ?\Filament\Notifications\Notification
+    {
+        return null;
+    }
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->with(['memberships.package']);
+    }
 }

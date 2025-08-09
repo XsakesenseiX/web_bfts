@@ -1,0 +1,29 @@
+body {
+    background-color: #121212; /* Warna hitam pekat sebagai dasar */
+    color: #E5E7EB; /* Teks abu-abu terang */
+    font-family: 'Figtree', sans-serif;
+}
+
+.bg-dark-primary { background-color: #232323; }
+.text-accent { color: #96FF36; }
+.bg-accent { background-color: #96FF36; }
+.border-accent { border-color: #96FF36; }
+
+.hero-section {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1571902943202-507ec2618e8f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1975&q=80');
+    background-size: cover;
+    background-position: center;
+}
+
+.btn-primary {
+    background-color: #96FF36;
+    color: #232323;
+    font-weight: bold;
+    padding: 12px 32px;
+    border-radius: 8px;
+    transition: opacity 0.3s;
+}
+
+.btn-primary:hover {
+    opacity: 0.9;
+}

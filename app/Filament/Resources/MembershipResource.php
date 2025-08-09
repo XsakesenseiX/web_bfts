@@ -84,4 +84,9 @@ class MembershipResource extends Resource
             'index' => Pages\ListMemberships::route('/'),
         ];
     }    
+
+    protected static function getCreatedNotification(): ?\Filament\Notifications\Notification
+    {
+        return null;
+    }    
 }

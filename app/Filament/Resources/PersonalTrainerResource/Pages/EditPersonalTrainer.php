@@ -10,6 +10,11 @@ class EditPersonalTrainer extends EditRecord
 {
     protected static string $resource = PersonalTrainerResource::class;
 
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
+    }
+
     protected function getHeaderActions(): array
     {
         return [

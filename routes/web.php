@@ -41,7 +41,7 @@ Route::get('/dashboard', function () {
         'membership' => $displayMembership, // Gunakan variabel yang sudah difilter
         'checkInHistory' => $checkInHistory,
     ]);
-})->middleware(['auth', 'verified', 'approved'])->name('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
 
 
 // GRUP ROUTE KHUSUS MEMBER
@@ -69,5 +69,9 @@ Route::middleware('auth')->group(function () {
 Route::get('/pending-approval', function () {
     return view('auth.pending-approval');
 })->middleware('auth')->name('pending.approval');
+
+Route::get('/check-approval-status', function () {
+    return response()->json(['is_approved' => auth()->user()->is_approved]);
+})->middleware('auth')->name('check.approval.status');
 
 require __DIR__.'/auth.php';

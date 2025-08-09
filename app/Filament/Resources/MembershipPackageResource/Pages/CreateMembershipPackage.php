@@ -6,7 +6,12 @@ use App\Filament\Resources\MembershipPackageResource;
 use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
 
-class CreateMembershipPackage extends CreateRecord
+    class CreateMembershipPackage extends CreateRecord
 {
     protected static string $resource = MembershipPackageResource::class;
+
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
+    }
 }

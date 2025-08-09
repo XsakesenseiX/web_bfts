@@ -8,7 +8,8 @@ export default defineConfig({
                 'resources/css/app.css',
                 'resources/css/member.css',
                 'resources/css/member-safe-styling.css',
-                'resources/js/app.js'
+                'resources/js/app.js',
+                'resources/css/landing.css',
             ],
             refresh: true,
         }),

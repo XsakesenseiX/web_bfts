@@ -33,6 +33,12 @@ class MembershipPackageResource extends Resource
                     ->suffix('hari'),
                 Forms\Components\Textarea::make('description')
                     ->columnSpanFull(),
+                Forms\Components\Select::make('type')
+                    ->options([
+                        'regular' => 'Regular',
+                        'student' => 'Student',
+                    ])
+                    ->required(),
             ]);
     }
 
@@ -43,6 +49,7 @@ class MembershipPackageResource extends Resource
                 Tables\Columns\TextColumn::make('name')->searchable(),
                 Tables\Columns\TextColumn::make('price')->money('IDR')->sortable(),
                 Tables\Columns\TextColumn::make('duration_days')->suffix(' hari')->sortable(),
+                Tables\Columns\TextColumn::make('type')->label('Tipe')->badge(),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
@@ -57,5 +64,10 @@ class MembershipPackageResource extends Resource
             'create' => Pages\CreateMembershipPackage::route('/create'),
             'edit' => Pages\EditMembershipPackage::route('/{record}/edit'),
         ];
+    }    
+
+    protected static function getCreatedNotification(): ?\Filament\Notifications\Notification
+    {
+        return null;
     }    
 }

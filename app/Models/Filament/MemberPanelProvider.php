@@ -70,6 +70,7 @@ class MemberPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
             ])
+            ->favicon(asset('favicon.ico'))
             ->viteTheme('resources/css/member-safe-styling.css')
             ->darkMode(false);
     }

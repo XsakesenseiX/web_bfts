@@ -50,6 +50,7 @@ class AdminPanelProvider extends PanelProvider
                 DisableBladeIconComponents::class,
                 DispatchServingFilamentEvent::class,
             ])
+            ->favicon(asset('favicon.ico'))
             ->authMiddleware([
                 Authenticate::class,
             ]);

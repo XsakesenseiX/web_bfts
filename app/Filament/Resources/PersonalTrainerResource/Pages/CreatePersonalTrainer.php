@@ -6,7 +6,12 @@ use App\Filament\Resources\PersonalTrainerResource;
 use Filament\Actions;
 use Filament\Resources\Pages\CreateRecord;
 
-class CreatePersonalTrainer extends CreateRecord
+    class CreatePersonalTrainer extends CreateRecord
 {
     protected static string $resource = PersonalTrainerResource::class;
+
+    protected function getRedirectUrl(): string
+    {
+        return $this->getResource()::getUrl('index');
+    }
 }
