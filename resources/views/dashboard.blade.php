@@ -2,7 +2,7 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             @if (session('success'))
-                <div class="bg-green-500 bg-opacity-20 border border-green-500 text-green-300 px-4 py-3 rounded-lg relative mb-6" role="alert">
+                <div class="bg-lime bg-opacity-20 border border-lime text-lime px-4 py-3 rounded-lg relative mb-6" role="alert">
                     <span class="block sm:inline">{{ session('success') }}</span>
                 </div>
             @endif
@@ -13,25 +13,37 @@
             @endif
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-<div class="bg-custom-gray p-6 rounded-lg shadow-md">
-                    <h4 class="font-bold text-lg mb-4 text-white">Informasi Membership</h4>
+<div class="bg-custom-gray p-6 rounded-lg shadow-md border border-lime shadow-lg shadow-lime-500/50">
+                    <h4 class="font-bold text-lg mb-4 text-lime">Informasi Membership</h4>
                     @if ($membership && $membership->status == 'active')
                          <div class="space-y-2 text-white">
-                            <p><strong>Tipe:</strong> {{ $membership->package->name }}</p>
-                            <p><strong>Status:</strong> <span class="px-2 py-1 text-xs font-semibold text-white bg-green-500 rounded-full">Aktif</span></p>
+                            <p><strong>Tipe:</strong> {{ $user->status === 'mahasiswa' ? 'Mahasiswa' : 'Umum' }}</p>
+                            <p><strong>Status:</strong> <span class="px-2 py-1 text-xs font-semibold text-white bg-lime rounded-full">Aktif</span></p>
                             <p><strong>Berlaku hingga:</strong> {{ \Carbon\Carbon::parse($membership->end_date)->format('d F Y') }}</p>
+                            @php
+                                $totalDuration = $membership->package->duration_days;
+                                $daysRemaining = now()->diffInDays($membership->end_date, false);
+                                $daysPassed = $totalDuration - $daysRemaining;
+                                $percentage = ($daysPassed / $totalDuration) * 100;
+                                // Ensure percentage is between 0 and 100
+                                $percentage = max(0, min(100, $percentage));
+                            @endphp
+                            <p><strong>Sisa Hari:</strong> {{ intval($daysRemaining) }} hari</p>
+                            <div class="w-full bg-lime rounded-full h-2.5 mt-2">
+                                <div class="bg-gray-700 h-2.5 rounded-full" style="width: {{ $percentage }}%"></div>
+                            </div>
                         </div>
                     @else
                         <div class="text-center">
                             <p class="mb-4 text-white">Anda belum memiliki paket membership aktif.</p>
-<a href="{{ route('packages.index') }}" class="inline-block bg-lime hover:bg-lime/90 text-black font-bold py-2 px-4 rounded">
+<a href="{{ route('packages.index') }}" class="inline-block bg-lime hover:bg-lime hover:shadow-lg hover:shadow-lime-500/50 text-black font-bold py-2 px-4 rounded">
                                 Lihat Paket Membership
                             </a>
                         </div>
                     @endif
                 </div>
-<div class="bg-custom-gray p-6 rounded-lg shadow-md">
-                    <h4 class="font-bold text-lg mb-4 text-white">Riwayat Presensi Terakhir</h4>
+<div class="bg-custom-gray p-6 rounded-lg shadow-md border border-lime shadow-lg shadow-lime-500/50">
+                    <h4 class="font-bold text-lg mb-4 text-lime">Riwayat Presensi Terakhir</h4>
                     <table class="w-full text-sm text-white">
                         <thead><tr class="border-b border-[var(--theme-border)]"><th class="text-left pb-2">Tanggal</th><th class="text-left pb-2">Waktu</th><th class="text-left pb-2">Loker</th></tr></thead>
                         <tbody>

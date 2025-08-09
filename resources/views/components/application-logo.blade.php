@@ -1,1 +1,1 @@
-<img src="{{ asset('assets/images/font-btfs.png') }}" alt="BodyFit Tenbah Sawah" {{ $attributes->merge(['class' => 'h-24 w-auto']) }} />
+<img src="{{ asset('assets/images/font-btfs.png') }}" alt="BodyFit Tenbah Sawah" {{ $attributes->merge(['class' => '']) }} />

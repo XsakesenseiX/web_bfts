@@ -25,10 +25,7 @@ class StudentVerificationResource extends Resource
 
     protected static ?string $navigationGroup = 'Verifikasi';
 
-    public static function getNavigationBadge(): ?string
-    {
-        return static::getModel()::where('status', 'mahasiswa')->where('is_approved', false)->count();
-    }
+    
 
     public static function getEloquentQuery(): Builder
     {

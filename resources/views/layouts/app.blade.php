@@ -13,7 +13,7 @@
 
         @vite(['resources/css/app.css', 'resources/css/custom-theme.css', 'resources/js/app.js'])
     </head>
-<body class="font-sans antialiased bg-black text-white">
+<body class="font-sans antialiased bg-gradient-to-br from-custom-gray via-black to-black text-white">
         {{-- UBAH DIV DI BAWAH INI --}}
         <div class="min-h-screen" style="background-color: var(--theme-bg);">
             @include('layouts.navigation')

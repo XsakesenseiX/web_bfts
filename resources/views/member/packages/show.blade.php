@@ -25,7 +25,7 @@
                             <form method="POST" action="{{ route('packages.purchase', $package->id) }}" enctype="multipart/form-data">
                                 @csrf
                                 <input type="file" name="payment_proof" id="payment_proof" required class="block w-full text-sm border border-[var(--theme-border)] rounded-lg cursor-pointer bg-gray-700 text-gray-400 focus:outline-none placeholder-gray-400">
-                                <button type="submit" class="w-full mt-6 bg-green-500 hover:bg-green-600 text-black font-bold py-3 px-4 rounded-lg">
+                                <button type="submit" class="w-full mt-6 bg-lime hover:bg-lime text-black font-bold py-3 px-4 rounded-lg">
                                     Konfirmasi Pembelian
                                 </button>
                             </form>

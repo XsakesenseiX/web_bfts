@@ -4,7 +4,7 @@
             <div class="flex">
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
-                        <x-application-logo class="block h-9 w-auto fill-current text-[var(--theme-text)]" />
+                        <x-application-logo class="block h-20 w-auto fill-current text-[var(--theme-text)]" />
                     </a>
                 </div>
 

@@ -14,7 +14,7 @@ class Dashboard extends BaseDashboard
     public function getWidgets(): array
     {
         return [
-            \App\Filament\Widgets\StatsOverviewWidget::class,
+            \App\Filament\Widgets\VerificationOverview::class,
             \App\Filament\Widgets\RecentCheckIns::class,
         ];
     }

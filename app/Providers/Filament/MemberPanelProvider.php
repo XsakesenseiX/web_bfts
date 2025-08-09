@@ -28,7 +28,7 @@ class MemberPanelProvider extends PanelProvider
             ->brandLogo(asset('assets/images/font-btfs.png'))
             ->brandLogoHeight('3rem')
             ->colors([
-                'primary' => '#9BFD14',
+                'primary' => '#96FF36',
                 'gray' => '#909090',
             ])
             ->viteTheme('resources/css/member-safe-styling.css')

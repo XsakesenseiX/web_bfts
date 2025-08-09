@@ -21,18 +21,7 @@ Route::get('/dashboard', function () {
 
     $user = auth()->user();
 
-    // 1. Prioritaskan mencari membership yang 'active'
-    $displayMembership = $user->memberships()->where('status', 'active')->first();
-
-    // 2. Jika tidak ada yang aktif, baru cari yang 'pending'
-    if (!$displayMembership) {
-        $displayMembership = $user->memberships()->where('status', 'pending')->latest()->first();
-    }
-
-    // 3. Jika masih tidak ada, baru cari yang paling baru (kemungkinan expired)
-    if (!$displayMembership) {
-        $displayMembership = $user->memberships()->latest()->first();
-    }
+    $displayMembership = $user->memberships()->latest()->first();
 
     $checkInHistory = $user->checkIns()->latest()->take(10)->get();
     
@@ -41,7 +30,7 @@ Route::get('/dashboard', function () {
         'membership' => $displayMembership, // Gunakan variabel yang sudah difilter
         'checkInHistory' => $checkInHistory,
     ]);
-})->middleware(['auth', 'verified'])->name('dashboard');
+})->middleware(['auth'])->name('dashboard');
 
 
 // GRUP ROUTE KHUSUS MEMBER
