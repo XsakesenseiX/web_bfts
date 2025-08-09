@@ -12,6 +12,7 @@ class Membership extends Model
     'start_date',
     'end_date',
     'status',
+    'check_ins_made',
     'payment_proof',
 ];
 

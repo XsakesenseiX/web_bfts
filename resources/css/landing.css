@@ -25,3 +25,32 @@ body {
 .btn-primary:hover {
     opacity: 0.9;
 }
+
+.reveal-text {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+}
+
+.reveal-text::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #121212; /* Match body background */
+    transform-origin: left;
+    transform: translateX(0%);
+    animation: revealAnimation 1s ease-out forwards;
+}
+
+.reveal-text:nth-child(3)::after { /* Target the second span in h2 */
+    animation-delay: 0.5s; /* Delay the second line's animation */
+}
+
+@keyframes revealAnimation {
+    to {
+        transform: translateX(100%);
+    }
+}

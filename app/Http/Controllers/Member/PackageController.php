@@ -17,9 +17,9 @@ class PackageController extends Controller
         $query = MembershipPackage::query();
 
         if ($user->status === 'mahasiswa') {
-            $query->where('type', 'student');
+            $query->whereIn('type', ['student', 'loyalty']);
         } else {
-            $query->where('type', 'regular');
+            $query->whereIn('type', ['regular', 'loyalty']);
         }
 
         $packages = $query->get();

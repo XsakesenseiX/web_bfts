@@ -82,19 +82,43 @@ class CheckInResource extends Resource
                 ])
                 ->action(function (array $data) {
                     $user = User::find($data['userId']);
-                    if (!$user->activeMembership()->exists()) {
+                    $activeMembership = $user->activeMembership;
+
+                    if (!$activeMembership) {
                         Notification::make()->title('Check-in Gagal!')->body('Member ini tidak memiliki membership aktif.')->danger()->send();
                         return;
                     }
+
+                    // Check daily limit for all members
                     if ($user->checkIns()->whereDate('created_at', Carbon::today())->count() >= 5) {
                         Notification::make()->title('Check-in Gagal!')->body('Member ini sudah mencapai batas maksimal 5x check-in hari ini.')->warning()->send();
                         return;
                     }
+
+                    // Check check-in limit for Loyalty Card members
+                    if ($activeMembership->package->type === 'loyalty' && $activeMembership->package->check_in_limit !== null) {
+                        if ($activeMembership->check_ins_made >= $activeMembership->package->check_in_limit) {
+                            Notification::make()->title('Check-in Gagal!')->body('Member ini sudah mencapai batas check-in untuk Loyalty Card.')->danger()->send();
+                            return;
+                        }
+                    }
+
                     CheckIn::create(['user_id' => $user->id]);
+
+                    // Increment check_ins_made for Loyalty Card members
+                    if ($activeMembership->package->type === 'loyalty') {
+                        $activeMembership->increment('check_ins_made');
+                        // If check-in limit is reached, expire the membership
+                        if ($activeMembership->check_ins_made >= $activeMembership->package->check_in_limit) {
+                            $activeMembership->update(['status' => 'expired']);
+                            Notification::make()->title('Membership Expired!')->body('Loyalty Card member reached check-in limit.')->warning()->send();
+                        }
+                    }
+
                     Notification::make()->title('Check-in Berhasil!')->body($user->name . ' berhasil check-in.')->success()->send();
                 })
         ]);
-}
+    }
     
     public static function getPages(): array
     {
@@ -102,4 +126,9 @@ class CheckInResource extends Resource
             'index' => Pages\ListCheckIns::route('/'),
         ];
     }    
+
+    public static function getEloquentQuery(): Builder
+    {
+        return parent::getEloquentQuery()->with(['user.activeMembership.package']);
+    }
 }

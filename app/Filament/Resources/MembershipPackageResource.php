@@ -37,8 +37,15 @@ class MembershipPackageResource extends Resource
                     ->options([
                         'regular' => 'Regular',
                         'student' => 'Student',
+                        'loyalty' => 'Loyalty',
                     ])
-                    ->required(),
+                    ->required()
+                    ->reactive(),
+                Forms\Components\TextInput::make('check_in_limit')
+                    ->numeric()
+                    ->label('Batas Check-in (untuk Loyalty Card)')
+                    ->hidden(fn (Forms\Get $get) => $get('type') !== 'loyalty')
+                    ->required(fn (Forms\Get $get) => $get('type') === 'loyalty'),
             ]);
     }
 
@@ -49,6 +56,7 @@ class MembershipPackageResource extends Resource
                 Tables\Columns\TextColumn::make('name')->searchable(),
                 Tables\Columns\TextColumn::make('price')->money('IDR')->sortable(),
                 Tables\Columns\TextColumn::make('duration_days')->suffix(' hari')->sortable(),
+                Tables\Columns\TextColumn::make('check_in_limit')->label('Batas Check-in')->placeholder('-'),
                 Tables\Columns\TextColumn::make('type')->label('Tipe')->badge(),
             ])
             ->actions([
