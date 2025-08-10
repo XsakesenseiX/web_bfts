@@ -70,7 +70,7 @@
 
         <section class="py-20 bg-black" data-aos="fade-up">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-                 <h3 class="text-4xl font-bold text-white">Our Membership Plans</h3>
+                <h3 class="text-4xl font-bold text-white">Our Membership Plans</h3>
                 <p class="mt-4 max-w-2xl mx-auto text-gray-400">Choose the plan that best fits your fitness journey.</p>
                 <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div class="p-8 border border-gray-700 rounded-lg" data-aos="fade-up" data-aos-delay="100">
@@ -87,6 +87,20 @@
                     </div>
                 </div>
                 <a href="{{ route('packages.index') }}" class="text-accent mt-8 inline-block hover:underline">View All Plans</a>
+            </div>
+        </section>
+
+        <section class="py-20 bg-dark-primary" data-aos="fade-up">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h3 class="text-4xl font-bold text-white mb-12">Meet Our Personal Trainers</h3>
+                <div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div data-aos="fade-up" data-aos-delay="100">
+                        <img src="{{ asset('assets/images/ewa.jpg') }}" alt="Personal Trainer 1" class="w-full h-[450px] object-contain">
+                    </div>
+                    <div data-aos="fade-up" data-aos-delay="200">
+                        <img src="{{ asset('assets/images/anin.jpg') }}" alt="Personal Trainer 2" class="w-full h-[450px] object-contain">
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -114,16 +128,18 @@
             </div>
         </section>
 
+        
+
         <section class="py-20 bg-dark-primary" data-aos="fade-up">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                 <h3 class="text-4xl font-bold text-white mb-12">Our Gym Gallery</h3>
                 <div class="swiper mySwiper">
                     <div class="swiper-wrapper">
                         <!-- Placeholder Images for Gallery -->
-                        <div class="swiper-slide"><img src="https://images.unsplash.com/photo-1571019613454-1cb2fcdb4679?auto=format&fit=crop&w=800&q=60" alt="Gym Image 1" class="rounded-lg w-full h-96 object-cover shadow-lg"></div>
-                        <div class="swiper-slide"><img src="https://images.unsplash.com/photo-1593079831471-280a545c4176?auto=format&fit=crop&w=800&q=60" alt="Gym Image 2" class="rounded-lg w-full h-96 object-cover shadow-lg"></div>
-                        <div class="swiper-slide"><img src="https://images.unsplash.com/photo-1584829189639-954195e38ad6?auto=format&fit=crop&w=800&q=60" alt="Gym Image 3" class="rounded-lg w-full h-96 object-cover shadow-lg"></div>
-                        <div class="swiper-slide"><img src="https://images.unsplash.com/photo-1546483875-ad928f05292e?auto=format&fit=crop&w=800&q=60" alt="Gym Image 4" class="rounded-lg w-full h-96 object-cover shadow-lg"></div>
+                        <div class="swiper-slide"><img src="{{ asset('assets/images/1.png') }}" alt="Gym Image 1" class="rounded-lg w-full h-[600px] object-cover shadow-lg"></div>
+                        <div class="swiper-slide"><img src="{{ asset('assets/images/2.png') }}" alt="Gym Image 2" class="rounded-lg w-full h-[600px] object-cover shadow-lg"></div>
+                        <div class="swiper-slide"><img src="{{ asset('assets/images/3.png') }}" alt="Gym Image 3" class="rounded-lg w-full h-[600px] object-cover shadow-lg"></div>
+                        <div class="swiper-slide"><img src="{{ asset('assets/images/4.png') }}" alt="Gym Image 4" class="rounded-lg w-full h-[600px] object-cover shadow-lg"></div>
                         <div class="swiper-slide"><img src="https://images.unsplash.com/photo-1517963628600-89017d60b517?auto=format&fit=crop&w=800&q=60" alt="Gym Image 5" class="rounded-lg w-full h-96 object-cover shadow-lg"></div>
                         <div class="swiper-slide"><img src="https://images.unsplash.com/photo-1574680096145-d05b47f210e1?auto=format&fit=crop&w=800&q=60" alt="Gym Image 6" class="rounded-lg w-full h-96 object-cover shadow-lg"></div>
                     </div>
@@ -146,14 +162,14 @@
                 <h3 class="text-4xl font-bold text-white mb-12">Find Us Here!</h3>
                 <p class="mt-4 max-w-2xl mx-auto text-gray-400">Visit us at our state-of-the-art facility.</p>
                 <div class="mt-12 w-full max-w-4xl mx-auto">
-                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3966.6000000000005!2d106.82000000000001!3d-6.175392!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMTPCsDQwJzQ3LjQiUyAxMDbCsDQ5JzEyLjUiRQ!5e0!3m2!1sen!2sid!4m6!3m5!1s0x0%3A0x0!2zMTPCsDQwJzQ3LjQiUyAxMDbCsDQ5JzEyLjUiRQ!4m1!1e0!5m1!1e0" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3953.660217030621!2d110.396491!3d-7.719557799999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7a59fed686125b%3A0x9a9bd63ead31d27a!2sBody%20Fit%20Tengah%20Sawah%20(Gym%20apparel%20Equipment%20%26%20Fitness%20Center)!5e0!3m2!1sid!2sid!4v1754804305965!5m2!1sid!2sid" width="100%" height="500" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
                 <div class="mt-8 text-gray-300">
                     <p class="font-semibold">Address:</p>
-                    <p>Jl. Contoh Alamat Gym No. 123, Kota Contoh, Negara Contoh</p>
+                    <p>Jl. Kasuari No. 61, Drono, Sardonoharjo, Kec. Ngaglik, Jakal KM 9.5</p>
                     <p class="font-semibold mt-4">Operating Hours:</p>
-                    <p>Mon - Fri: 6:00 AM - 10:00 PM</p>
-                    <p>Sat - Sun: 8:00 AM - 8:00 PM</p>
+                    <p>Senin - Sabtu: 07:00 - 22:00</p>
+                    <p>Minggu: 07:00 - 20:00</p>
                 </div>
             </div>
         </section>
@@ -175,5 +191,24 @@
         AOS.init();
     </script>
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script>
+        var swiper = new Swiper(".mySwiper", {
+            slidesPerView: 1,
+            spaceBetween: 30,
+            loop: true,
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true,
+            },
+            autoplay: {
+                delay: 2500,
+                disableOnInteraction: false,
+            },
+            navigation: {
+                nextEl: ".swiper-button-next",
+                prevEl: ".swiper-button-prev",
+            },
+        });
+    </script>
 </body>
 </html>

@@ -11,6 +11,7 @@ use Filament\Forms;
 
 class RecentCheckIns extends BaseWidget
 {
+    protected static ?string $pollingInterval = '5s';
     protected static ?int $sort = 2; // Urutan widget di dashboard
     protected int | string | array $columnSpan = 'full'; // Agar widget ini memakan lebar penuh
 

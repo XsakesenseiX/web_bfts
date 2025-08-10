@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\UserResource\RelationManagers;
 
+
 use App\Models\MembershipPackage;
 use Filament\Forms;
 use Filament\Forms\Form;
@@ -14,6 +15,8 @@ use Illuminate\Database\Eloquent\SoftDeletingScope;
 class MembershipsRelationManager extends RelationManager
 {
     protected static string $relationship = 'memberships';
+
+    protected static ?string $pollingInterval = '5s';
 
     public function form(Form $form): Form
     {
@@ -83,7 +86,11 @@ class MembershipsRelationManager extends RelationManager
                             'end_date' => now()->addDays($data['remaining_days']),
                             'check_ins_made' => $newCheckInsMade,
                         ]);
+
+                        
                     }),
             ]);
     }
+
+    
 }
