@@ -61,4 +61,5 @@ class PersonalTrainerResource extends Resource
             'edit' => Pages\EditPersonalTrainer::route('/{record}/edit'),
         ];
     }    
-}
+
+    }

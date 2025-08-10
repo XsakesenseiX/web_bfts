@@ -7,6 +7,7 @@ use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\Member\PackageController as MemberPackageController;
 use App\Http\Controllers\Member\CheckInController as MemberCheckInController;
 use App\Http\Controllers\Member\PersonalTrainerController;
+use App\Http\Controllers\Member\PersonalTrainerPackageController; // Add this line
 
 // Halaman utama untuk tamu
 Route::get('/', [WelcomeController::class, 'index'])->name('welcome');
@@ -43,6 +44,7 @@ Route::middleware(['auth', 'member'])->group(function() {
     Route::post('/check-in', [MemberCheckInController::class, 'store'])->name('checkin.store');
 
     Route::get('/personal-trainers', [PersonalTrainerController::class, 'index'])->name('trainers.index');
+    Route::get('/personal-trainer-packages', [PersonalTrainerPackageController::class, 'index'])->name('personal-trainer-packages.index'); // New route
 });
 
 

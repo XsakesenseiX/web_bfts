@@ -23,6 +23,9 @@
                          <x-nav-link :href="route('trainers.index')" :active="request()->routeIs('trainers.index')">
                             {{ __('Personal Trainer') }}
                         </x-nav-link>
+                        <x-nav-link :href="route('personal-trainer-packages.index')" :active="request()->routeIs('personal-trainer-packages.index')">
+                            {{ __('Paket Personal Trainer') }}
+                        </x-nav-link>
                     @endif
                 </div>
             </div>
@@ -70,6 +73,20 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+            @if(Auth::user()->role === 'member')
+                <x-responsive-nav-link :href="route('packages.index')" :active="request()->routeIs('packages.*')">
+                    {{ __('Paket Membership') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('checkin.create')" :active="request()->routeIs('checkin.create')">
+                    {{ __('Check-in') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('trainers.index')" :active="request()->routeIs('trainers.index')">
+                    {{ __('Personal Trainer') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('personal-trainer-packages.index')" :active="request()->routeIs('personal-trainer-packages.index')">
+                    {{ __('Paket Personal Trainer') }}
+                </x-responsive-nav-link>
+            @endif
         </div>
         <div class="pt-4 pb-1 border-t border-gray-600">
             <div class="px-4">
