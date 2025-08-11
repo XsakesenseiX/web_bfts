@@ -85,4 +85,12 @@ class User extends Authenticatable implements FilamentUser
     {
         return $this->hasMany(CheckIn::class);
     }
+
+    /**
+     * Get the transaction proofs for the user.
+     */
+    public function transactionProofs()
+    {
+        return $this->hasMany(TransactionProof::class);
+    }
 }

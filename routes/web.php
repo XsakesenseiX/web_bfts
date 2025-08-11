@@ -7,6 +7,7 @@ use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\Member\PackageController as MemberPackageController;
 use App\Http\Controllers\Member\CheckInController as MemberCheckInController;
 use App\Http\Controllers\Member\PersonalTrainerController;
+use App\Http\Controllers\Admin\TransactionProofFileController; // Add this line
 use App\Http\Controllers\Member\PersonalTrainerPackageController; // Add this line
 
 // Halaman utama untuk tamu
@@ -22,7 +23,7 @@ Route::get('/dashboard', function () {
 
     $user = auth()->user();
 
-    $displayMembership = $user->memberships()->latest()->first();
+    $displayMembership = $user->memberships()->where('status', 'active')->first();
 
     $checkInHistory = $user->checkIns()->latest()->take(10)->get();
     
@@ -64,5 +65,10 @@ Route::get('/pending-approval', function () {
 Route::get('/check-approval-status', function () {
     return response()->json(['is_approved' => auth()->user()->is_approved]);
 })->middleware('auth')->name('check.approval.status');
+
+// Route for serving transaction proof files (protected by admin middleware)
+Route::middleware(['auth', 'admin'])->group(function () {
+    Route::get('/admin/transaction-proofs/{filename}', [TransactionProofFileController::class, 'show'])->name('admin.transaction-proofs.show');
+});
 
 require __DIR__.'/auth.php';

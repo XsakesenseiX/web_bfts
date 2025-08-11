@@ -47,43 +47,44 @@ class PackageController extends Controller
 
     public function purchase(Request $request, MembershipPackage $package)
     {
-        $request->validate(['payment_proof' => 'required|image|mimes:jpeg,png,jpg|max:2048']);
-        $path = $request->file('payment_proof')->store('proofs', 'public');
+        try {
+            $request->validate(['payment_proof' => 'required|image|mimes:jpeg,png,jpg|max:10240']);
+            
+            $user = Auth::user();
+            $activeMembership = $user->memberships()->where('status', 'active')->first();
 
-        $user = Auth::user();
-        $activeMemberships = $user->memberships()->where('status', 'active')->get();
-
-        foreach ($activeMemberships as $activeMembership) {
-            if ($package->type === 'loyalty') {
-                if ($activeMembership->package->type === 'regular' || $activeMembership->package->type === 'student') {
-                    Notification::make()
-                        ->title('Pembelian Gagal')
-                        ->body('Anda sudah memiliki paket Regular atau Student yang aktif. Tidak bisa membeli paket Loyalty.')
-                        ->danger()
-                        ->send();
-                    return redirect()->back();
+            if ($activeMembership) {
+                $activePackageType = $activeMembership->package->type;
+                
+                // If user has loyalty package, they cannot buy any other package
+                if ($activePackageType === 'loyalty') {
+                    return redirect()->back()->with('error', 'Anda sudah memiliki paket Loyalty yang aktif. Tidak bisa membeli paket lain.');
                 }
-            } elseif ($package->type === 'regular' || $package->type === 'student') {
-                if ($activeMembership->package->type === 'loyalty') {
-                    Notification::make()
-                        ->title('Pembelian Gagal')
-                        ->body('Anda sudah memiliki paket Loyalty yang aktif. Tidak bisa membeli paket Regular atau Student.')
-                        ->danger()
-                        ->send();
-                    return redirect()->back();
+                
+                // If user wants to buy loyalty but has regular/student, prevent it
+                if ($package->type === 'loyalty' && ($activePackageType === 'regular' || $activePackageType === 'student')) {
+                    return redirect()->back()->with('error', 'Anda sudah memiliki paket Regular/Student yang aktif. Tidak bisa membeli paket Loyalty.');
                 }
+                
+                // Allow purchase of same type (regular/student can buy regular/student)
+                // This will extend the membership duration when admin approves
             }
+
+            $path = $request->file('payment_proof')->store('proofs', 'public');
+
+            Membership::create([
+                'user_id' => Auth::id(),
+                'membership_package_id' => $package->id,
+                'start_date' => Carbon::now(),
+                'end_date' => Carbon::now()->addDays($package->duration_days),
+                'status' => 'pending',
+                'payment_proof' => $path,
+            ]);
+
+            return redirect()->route('dashboard')->with('success', 'Permintaan pembelian berhasil dikirim. Pembayaran sedang diproses oleh admin.');
+            
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
         }
-
-        Membership::create([
-            'user_id' => Auth::id(),
-            'membership_package_id' => $package->id,
-            'start_date' => Carbon::now(),
-            'end_date' => Carbon::now()->addDays($package->duration_days),
-            'status' => 'pending',
-            'payment_proof' => $path,
-        ]);
-
-        return redirect()->route('dashboard')->with('success', 'Permintaan pembelian berhasil dikirim.');
     }
 }

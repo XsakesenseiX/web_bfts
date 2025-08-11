@@ -6,6 +6,25 @@
     </x-slot>
     <div class="py-12">
         <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
+            @if(session('error'))
+                <div class="mb-4 p-4 bg-red-600 text-white rounded-lg">
+                    {{ session('error') }}
+                </div>
+            @endif
+            @if(session('success'))
+                <div class="mb-4 p-4 bg-green-600 text-white rounded-lg">
+                    {{ session('success') }}
+                </div>
+            @endif
+            @if($errors->any())
+                <div class="mb-4 p-4 bg-red-600 text-white rounded-lg">
+                    <ul>
+                        @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             <div class="bg-[#202326] overflow-hidden shadow-md sm:rounded-lg">
                 <div class="p-8 text-[var(--theme-text)]">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -14,7 +33,7 @@
                             <div class="border border-[var(--theme-border)] p-4 rounded-lg space-y-2">
                                 <div class="flex justify-between"><span>Paket {{ $package->name }}:</span><span class="font-semibold">Rp {{ number_format($package->price) }}</span></div>
                                 @if($additionalFee > 0)
-                                    <div class="flex justify-between text-red-400"><span>Biaya Pendaftaran Ulang:</span><span class="font-semibold">Rp {{ number_format($additionalFee) }}</span></div>
+                                    <div class="flex justify-between text-red-400"><span>Biaya Administrasi:</span><span class="font-semibold">Rp {{ number_format($additionalFee) }}</span></div>
                                 @endif
                                 <hr class="!my-3 border-[var(--theme-border)]">
                                 <div class="flex justify-between text-xl"><span class="font-bold text-white">Total Bayar:</span><span class="font-bold" style="color: var(--theme-button);">Rp {{ number_format($totalPrice) }}</span></div>

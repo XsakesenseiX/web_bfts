@@ -27,5 +27,18 @@ public function package()
 {
     return $this->belongsTo(MembershipPackage::class, 'membership_package_id');
 }
+
+public function membershipPackage()
+{
+    return $this->belongsTo(MembershipPackage::class, 'membership_package_id');
+}
+
+/**
+ * Get the transaction proofs for the membership.
+ */
+public function transactionProofs()
+{
+    return $this->hasMany(TransactionProof::class);
+}
 }
 
