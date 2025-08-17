@@ -36,8 +36,18 @@ class PackageController extends Controller
         $additionalFee = 0;
         $lastActiveMembership = $user->memberships()->where('status', 'active')->latest('end_date')->first();
 
-        if (!$lastActiveMembership || Carbon::parse($lastActiveMembership->end_date)->addMonths(3)->isPast()) {
-            $additionalFee = 40000;
+        if ($package->type === 'loyalty') {
+            $additionalFee = 0;
+        } else {
+            // This covers new members and members inactive for > 3 months
+            if (!$lastActiveMembership || Carbon::parse($lastActiveMembership->end_date)->addMonths(3)->isPast()) {
+                $additionalFee = 40000;
+            }
+
+            // This covers members switching from loyalty to regular/student
+            if ($lastActiveMembership && $lastActiveMembership->package->type === 'loyalty') {
+                $additionalFee = 40000;
+            }
         }
 
         $totalPrice = $package->price + $additionalFee;
